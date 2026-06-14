@@ -25,10 +25,11 @@ HOTKEY_DEBOUNCE_SECONDS = 0.35  # Prevents duplicate AltGr/Ctrl+Alt hotkey event
 SELECTION_CAPTURE_DELAY_MS = 180  # Wait for the creator hotkey to be released before copying
 SELECTION_COPY_TIMEOUT_MS = 900  # Maximum time to wait for highlighted text to reach the clipboard
 SELECTION_COPY_POLL_MS = 50  # Clipboard polling interval after sending Ctrl+C
+HOTKEY_RELEASE_TIMEOUT_MS = 900  # Maximum time to wait for the creator hotkey to be fully released
 DEFAULT_CONFIG = {
     "snippet_directory": r"D:\Markdown Project Foler (DO NOT DELETE)",
     "hotkey_launcher": "ctrl+shift+x",
-    "hotkey_creator": "ctrl+shift+v",
+    "hotkey_creator": "ctrl+alt+n",
     "run_at_startup": START_WITH_WINDOWS,
 }
 
@@ -303,6 +304,27 @@ def paste_clipboard_into_active_window():
         return True, "Success"
     except Exception as e:
         return False, str(e)
+
+
+def looks_like_location_capture(text):
+    """Detects browser URLs and Explorer paths that appear when text capture failed."""
+    if not text:
+        return False
+
+    stripped = text.strip()
+    if not stripped or "\n" in stripped:
+        return False
+
+    if re.match(r"^(https?|file)://\S+$", stripped, re.IGNORECASE):
+        return True
+
+    if re.match(r"^[a-zA-Z]:[\\/].+", stripped):
+        return True
+
+    if re.match(r"^\\\\[^\\/]+[\\/][^\\/]+", stripped):
+        return True
+
+    return False
 
 
 # ---------------------------------------------------------
@@ -1137,6 +1159,33 @@ class BorderlessSnippetLauncher:
         previous_clipboard = pyperclip.paste()
         sentinel = "__ANTIGRAVITY_SNIPPET_EMPTY_SELECTION__"
 
+        self.wait_for_creator_hotkey_release(previous_clipboard, sentinel, 0)
+
+    def wait_for_creator_hotkey_release(self, previous_clipboard, sentinel, elapsed_ms):
+        modifiers, trigger_key = parse_hotkey_string(self.config["hotkey_creator"])
+        pressed = False
+
+        for key in modifiers + [trigger_key]:
+            if not key:
+                continue
+            try:
+                if keyboard.is_pressed(key):
+                    pressed = True
+                    break
+            except Exception:
+                pass
+
+        if pressed and elapsed_ms < HOTKEY_RELEASE_TIMEOUT_MS:
+            self.root.after(
+                SELECTION_COPY_POLL_MS,
+                lambda: self.wait_for_creator_hotkey_release(
+                    previous_clipboard,
+                    sentinel,
+                    elapsed_ms + SELECTION_COPY_POLL_MS
+                )
+            )
+            return
+
         self.root.after(
             SELECTION_CAPTURE_DELAY_MS,
             lambda: self.copy_selection_then_prompt(previous_clipboard, sentinel, 0)
@@ -1154,15 +1203,7 @@ class BorderlessSnippetLauncher:
                 # doesn't kill our own process on non-Windows platforms.
                 prev_handler = signal.signal(signal.SIGINT, signal.SIG_IGN)
                 try:
-                    # Release any modifier keys still held from the creator
-                    # hotkey press so the OS sees a clean Ctrl+C, not
-                    # Ctrl+Shift+C (which opens DevTools in browsers).
-                    for mod in ("shift", "ctrl", "alt"):
-                        try:
-                            keyboard.release(mod)
-                        except Exception:
-                            pass
-                    time.sleep(0.03)  # brief settle time for the OS input queue
+                    time.sleep(0.08)  # brief settle time for the OS input queue
                     keyboard.press_and_release("ctrl+c")
                 finally:
                     signal.signal(signal.SIGINT, prev_handler)
@@ -1170,6 +1211,28 @@ class BorderlessSnippetLauncher:
             copied_text = pyperclip.paste()
 
             if copied_text != sentinel:
+                if looks_like_location_capture(copied_text):
+                    if elapsed_ms < SELECTION_COPY_TIMEOUT_MS:
+                        self.root.after(
+                            SELECTION_COPY_POLL_MS,
+                            lambda: self.copy_selection_then_prompt(
+                                previous_clipboard,
+                                sentinel,
+                                elapsed_ms + SELECTION_COPY_POLL_MS,
+                                last_seen=copied_text,
+                                stable_count=0
+                            )
+                        )
+                        return
+
+                    log_event(f"Creator rejected likely URL/path capture: {copied_text}")
+                    pyperclip.copy(previous_clipboard)
+                    print("[Creator Error] Selection capture returned a URL or path instead of highlighted text.", file=sys.stderr)
+                    if self.is_visible:
+                        self.root.configure(highlightbackground="#f38ba8")
+                        self.root.after(500, lambda: self.root.configure(highlightbackground=self.accent_active))
+                    return
+
                 # Clipboard has changed — but is it stable yet?
                 if copied_text == last_seen:
                     new_stable = stable_count + 1

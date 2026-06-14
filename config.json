@@ -1,6 +1,6 @@
 {
     "hotkey_launcher": "ctrl+shift+x",
-    "hotkey_creator": "ctrl+shift+v",
+    "hotkey_creator": "ctrl+alt+n",
     "snippet_directory": "D:\\Markdown Project Foler (DO NOT DELETE)",
     "run_at_startup": true
 }
