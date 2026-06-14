@@ -1,6 +1,6 @@
 # Antigravity Markdown Snippet Launcher
 
-A keyboard-driven, borderless global search panel (similar to Alfred or macOS Spotlight) for managing, searching, and copying Markdown snippets instantly. Press `Ctrl + Shift + M` to toggle the utility, search reactively, and copy snippets directly to your clipboard. Use `Ctrl + Alt + N` to create snippets on-the-fly from highlighted text. Hotkeys can be changed from the Settings button in the launcher.
+A keyboard-driven, borderless global search panel (similar to Alfred or macOS Spotlight) for managing, searching, and copying Markdown snippets instantly. Press `Ctrl + Shift + M` to toggle the utility, search reactively, and copy snippets directly to your clipboard. Use `Ctrl + Shift + N` to create snippets on-the-fly from highlighted text. Hotkeys can be changed from the Settings button in the launcher.
 
 ---
 
@@ -27,7 +27,7 @@ graph TD
 
 ## 2. In-Depth Feature Set
 
-### ⚡ On-the-Fly Snippet Creator (`Ctrl + Alt + N` by default)
+### ⚡ On-the-Fly Snippet Creator (`Ctrl + Shift + N` by default)
 * **What it does**: Allows you to save snippets to your library instantly from your browser, editor, or terminal.
 * **How to use**: Highlight any text on your screen and press the configured create hotkey. The launcher copies the highlighted selection, prompts you for a name, and writes the snippet to the library when you hit `Enter`.
 
@@ -39,7 +39,7 @@ graph TD
 
 ### ⌨️ Keyboard-First Navigation
 * **`Ctrl + Shift + M` by default**: Toggles launcher visibility system-wide.
-* **`Ctrl + Alt + N` by default**: Spawns the snippet creator dialog.
+* **`Ctrl + Shift + N` by default**: Spawns the snippet creator dialog.
 * **Settings button**: Opens hotkey settings. Enter values like `ctrl+shift+m`, `alt+space`, or `ctrl+alt+f8`, then save and restart.
 * **`Up` / `Down` arrows**: Navigate the filtered listbox directly from the search bar without losing cursor focus.
 * **`Enter`**: Reads the selected snippet safely as UTF-8, copies it to the clipboard, hides the launcher, and returns focus to the active window.
