@@ -1,9 +1,0 @@
-__pycache__/
-*.py[cod]
-*.log
-build/
-dist/
-*.spec
-.venv/
-venv/
-Working Ver copy.py

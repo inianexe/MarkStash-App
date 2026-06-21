@@ -1,0 +1,16 @@
+# MarkStash runtime configuration. Safe for developers to edit.
+# Recommended hotkeys: ctrl+shift+x, ctrl+shift+b, alt gr+m, alt gr+n, ctrl+alt+f8.
+# Avoid common/reserved shortcuts such as ctrl+c, ctrl+v, alt+tab, alt+f4, win+r, and ctrl+shift+esc.
+snippet_directory: "D:\Markdown Project Foler (DO NOT DELETE)"
+hotkey_launcher: "ctrl+shift+x"
+hotkey_creator: "ctrl+shift+b"
+run_at_startup: true
+enable_pinning: true
+always_on_top: true
+window_width: 1000
+window_height: 485
+theme_accent: "#7c8cff"
+theme_background: "#101116"
+theme_panel: "#171923"
+theme_text: "#e7eaf3"
+setup_complete: false
