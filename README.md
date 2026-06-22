@@ -1,256 +1,422 @@
 # MarkStash
 
-<img src="pngwing.com.ico" width="48" alt="MarkStash icon">
+<p align="center">
+  <img src="markstash_badge.png" width="96" alt="MarkStash icon">
+</p>
 
-MarkStash is a Windows Markdown snippet launcher. It lets you keep a folder of `.md` snippets, search them with a global hotkey, preview the contents, paste snippets into the active app, and create new snippets from selected text.
+**MarkStash - By inianexe** is a Windows Markdown snippet launcher. It lets you save useful text, commands, templates, notes, screenshots, and code snippets as `.md` files, then search and paste them anywhere with a hotkey.
 
-![MarkStash launcher showing a saved Pokemon snippet](ss%20fol.png)
+![MarkStash launcher screenshot](ss%20fol.png)
 
-## What MarkStash Creates
+## Recommended Setup
 
-MarkStash is a portable app. It stores its runtime files next to `MarkStash.exe`, so the folder that contains the exe must be writable.
+MarkStash is portable, so it works best when you keep the EXE in a normal writable folder.
 
-After the first launch, MarkStash may create these files beside the exe:
-
-```text
-config.yaml
-hotkey_debug.log
-startup_crash.log
-```
-
-- `config.yaml` stores settings such as hotkeys, startup behavior, always-on-top, window size, and your snippet folder.
-- `hotkey_debug.log` records hotkey startup and reload events.
-- `startup_crash.log` is only created if the app crashes during startup.
-
-## Install From Releases
-
-1. Go to the GitHub Releases page for MarkStash.
-2. Download the latest `MarkStash.exe`.
-3. Create a normal writable folder for the app, for example:
-
-   ```text
-   D:\Apps\MarkStash
-   ```
-
-4. Copy `MarkStash.exe` into that folder.
-5. Do not put the exe inside:
-
-   ```text
-   C:\Program Files
-   C:\Program Files (x86)
-   C:\Windows
-   ```
-
-   Those folders are protected by Windows. MarkStash needs permission to create `config.yaml` and log files next to the exe, so a normal folder on `D:` or inside your user folder is safer.
-
-6. Double-click `MarkStash.exe` once.
-7. Wait a few seconds. MarkStash should create `config.yaml` and `hotkey_debug.log` next to the exe.
-
-## First Launch Checklist
-
-After opening the exe for the first time:
-
-1. Open MarkStash with the launcher hotkey.
-2. Click the Settings button.
-3. Change the snippet save location to the folder where you want your Markdown files to live.
-4. Change the hotkeys from `AltGr` shortcuts to `Ctrl + Shift` shortcuts.
-5. Save settings.
-6. Close and reopen MarkStash if the hotkeys do not immediately respond.
-
-## Choose a Snippet Folder
-
-Your snippet folder is where MarkStash reads and writes Markdown files.
-
-Recommended examples:
+Recommended app folder:
 
 ```text
-D:\Markdown Snippets
-D:\Notes\Snippets
-C:\Users\YourName\Documents\MarkStash
+D:\Apps\MarkStash
 ```
 
-Avoid:
+Recommended snippet folder:
+
+```text
+D:\Markdown Project Foler (DO NOT DELETE)
+```
+
+Your final setup should look like this:
+
+```text
+D:\Apps\MarkStash\
+  MarkStash.exe
+  config.yaml
+  hotkey_debug.log
+
+D:\Markdown Project Foler (DO NOT DELETE)\
+  CPU GPU.md
+  WiFi Networks.md
+  work\
+    email reply.md
+  assets\
+    screenshot-example.png
+```
+
+Avoid storing the EXE in:
 
 ```text
 C:\Program Files
+C:\Program Files (x86)
 C:\Windows
 Temporary folders
-Cloud folders that are still syncing
 ```
 
-Rules for the snippet folder:
+Those folders can block MarkStash from writing `config.yaml`, logs, backups, and runtime files.
 
-- Pick a folder you control and can write to.
-- Keep the folder in a stable location. If you move it, update the path in Settings.
-- MarkStash can create missing folders inside the selected snippet folder when you save nested snippets.
-- Existing `.md` files in the folder can be searched by MarkStash.
-- Non-Markdown files are not the main target; keep snippets as `.md` files.
+## Install
 
-## Folder Creation and Nested Snippets
+1. Download `MarkStash.exe`.
+2. Create this folder:
 
-When creating a snippet, the name field can include folders.
+```text
+D:\Apps\MarkStash
+```
+
+3. Move `MarkStash.exe` into that folder.
+4. Double-click `MarkStash.exe`.
+5. MarkStash will create or use `config.yaml` beside the EXE.
+6. Open MarkStash Settings.
+7. Set your snippet folder to:
+
+```text
+D:\Markdown Project Foler (DO NOT DELETE)
+```
+
+8. Save settings.
+9. Exit the old tray process if one is already running, then reopen the EXE.
+
+## Config File
+
+MarkStash reads `config.yaml` from the same folder as `MarkStash.exe`.
 
 Example:
 
 ```text
-pokemon/about
+D:\Apps\MarkStash\MarkStash.exe
+D:\Apps\MarkStash\config.yaml
 ```
 
-MarkStash saves that as:
+In this development repo, the packaged build is here:
 
 ```text
-pokemon/about.md
+D:\Projects\Markdown\dist_creator\MarkStash.exe
+D:\Projects\Markdown\dist_creator\config.yaml
 ```
 
-inside your selected snippet folder.
+Important config keys:
 
-For example, if your snippet folder is:
-
-```text
-D:\Markdown Project Folder
+```yaml
+snippet_directory: D:\Markdown Project Foler (DO NOT DELETE)
+hotkey_launcher: ctrl+shift+x
+hotkey_creator: ctrl+alt+v
+theme_mode: dark
+theme_palette: Mocha Terminal
+window_width: 1000
+window_height: 540
+window_opacity: 1.0
+spawn_near_cursor: true
+always_on_top: false
+show_badge: true
+show_credit: true
+show_resize_grip: true
+shadow_size: 5
+corner_radius: 0
 ```
 
-and you create:
+After editing `config.yaml`, hide and reopen the launcher or trigger the creator again. MarkStash reloads config before opening the launcher and creator.
 
-```text
-pokemon/about
-```
+## Main Features
 
-the final file becomes:
+- Global launcher hotkey
+- Global creator hotkey
+- Create snippets from selected text
+- Create empty snippets
+- Screenshot snippets from clipboard images
+- Markdown preview
+- Filename search
+- Content search
+- Folder filtering
+- Tag filtering
+- Favorites
+- Recent snippets
+- Usage count tracking
+- Rename snippets
+- Move snippets between folders
+- Safe delete into `.trash`
+- Duplicate detection
+- Template placeholders
+- Fill-in form before paste
+- Dynamic variables
+- Text expander aliases
+- File watcher live refresh
+- Backup/export zip
+- Command palette
+- Light and dark themes
+- Named color palettes
+- Fully editable YAML styling
+- Tray integration
+- Startup option
+- Resizable launcher
+- Spawn near cursor option
 
-```text
-D:\Markdown Project Folder\pokemon\about.md
-```
+## Launcher Usage
 
-![MarkStash creator saving a nested Pokemon snippet](ss%20creator.png)
-
-Snippet naming rules:
-
-- You can type a simple name such as `email reply`.
-- You can type a nested path such as `work/email/reply`.
-- You do not need to add `.md`; MarkStash adds it automatically.
-- Avoid empty names.
-- Avoid names that are only dots, such as `.` or `..`.
-- Use normal letters, numbers, spaces, hyphens, underscores, and dots.
-- Do not try to escape outside the selected snippet folder; MarkStash blocks unsafe paths.
-- If a file with the same name already exists, MarkStash will not overwrite it.
-
-## Recommended Hotkeys
-
-Some builds or configs may start with `AltGr` hotkeys such as:
-
-```text
-alt gr+m
-alt gr+n
-```
-
-You should change them in Settings to `Ctrl + Shift` shortcuts, for example:
+Press the launcher hotkey, usually:
 
 ```text
 ctrl+shift+x
-ctrl+shift+b
 ```
 
-Why:
-
-- `AltGr` behaves differently on different keyboard layouts.
-- Some laptops and international keyboards treat `AltGr` as `Ctrl + Alt`.
-- `Ctrl + Shift` shortcuts are usually more predictable on Windows.
-
-Hotkey rules:
-
-- Use at least one modifier key.
-- Safer examples are `ctrl+shift+x`, `ctrl+shift+b`, and `ctrl+alt+f8`.
-- Avoid reserved Windows shortcuts such as `alt+tab`, `alt+f4`, `ctrl+alt+delete`, `ctrl+shift+esc`, `windows+r`, and `windows+l`.
-- Avoid common editing shortcuts such as `ctrl+c`, `ctrl+v`, `ctrl+x`, `ctrl+z`, `ctrl+a`, and `ctrl+s`.
-- If a hotkey does not work, choose another combination and save settings again.
-
-## Basic Usage
-
-- Press the launcher hotkey to show or hide MarkStash.
-- Search by snippet name, tag, or folder.
-- Use arrow keys to select a result.
-- Press Enter to copy and paste the selected snippet.
-- Press Escape to dismiss the launcher.
-- Press the creator hotkey to create a new snippet from selected text.
-- Use Settings to change hotkeys, snippet folder, startup behavior, theme colors, and window size.
-
-## Creating a Snippet From Selected Text
-
-1. Highlight text in a browser, editor, PDF, or another app.
-2. Press the creator hotkey.
-3. Enter a snippet name.
-4. Use `/` in the name if you want MarkStash to create folders.
-5. Click Save.
-
-Example:
+Then:
 
 ```text
-figma/button-states
+Type search text     Filter snippets
+Arrow keys           Move selection
+Enter                Copy/paste selected snippet
+Esc                  Hide launcher
+Ctrl+N               New empty snippet
+Ctrl+E               Edit/open selected snippet
+F2                   Rename selected snippet
+Delete               Move snippet to .trash
+Ctrl+B               Backup/export snippets
+Ctrl+P               Command palette
+Ctrl+R               Refresh snippets
+Ctrl+L               Clear search
+Ctrl+O               Open snippet folder
+Ctrl+Shift+S         Create screenshot snippet from clipboard image
 ```
 
-creates:
+![MarkStash launcher with snippets and preview](ss%20fol.png)
+
+## Creator Usage
+
+Highlight text in any app, then press the creator hotkey:
 
 ```text
-figma\button-states.md
+ctrl+alt+v
 ```
 
-## Run at Startup
+The creator popup opens with:
 
-If Run at Startup is enabled, MarkStash creates a Startup entry for your Windows user account.
+- Snippet name box
+- Live selected text preview
+- Character/word/line count
+- Folder-aware naming
+- Duplicate warning
+- Open after save option
+- Copy path option
 
-On Windows sign-in:
+You can create folders by typing a path:
 
-1. MarkStash starts in the background.
-2. The launcher window stays hidden.
-3. Press the launcher hotkey to show it.
-
-If you move `MarkStash.exe` to a different folder, open the app once from the new folder so it can refresh the Startup entry.
-
-## Always on Top
-
-The release build can keep MarkStash above other windows when it opens. This is controlled by:
-
-```yaml
-always_on_top: true
+```text
+work/email/reply
 ```
 
-in `config.yaml`.
+This creates:
 
-Set it to `false` if you do not want the launcher to stay above other windows.
+```text
+D:\Markdown Project Foler (DO NOT DELETE)\work\email\reply.md
+```
+
+![MarkStash creator popup](ss%20creator.png)
+
+## Screenshot Snippets
+
+1. Take a screenshot with any Windows screenshot tool.
+2. Copy the screenshot to clipboard.
+3. Open MarkStash.
+4. Press `Ctrl+Shift+S`.
+5. Name the screenshot snippet.
+
+MarkStash saves:
+
+```text
+assets\your-image.png
+your-snippet.md
+```
+
+The Markdown file embeds the image.
+
+## Tags And Folders
+
+Use Markdown frontmatter at the top of a snippet:
+
+```markdown
+---
+tags: [powershell, work]
+aliases: [;cpu]
+---
+
+Get-CimInstance Win32_Processor
+```
+
+`tags` appear in the tag filter.
+
+Folders appear in the folder filter.
+
+Aliases are used by text expander mode.
+
+## Text Expander
+
+Add an alias in frontmatter:
+
+```markdown
+---
+aliases: [;sig]
+---
+
+Regards,
+inian.exe
+```
+
+When MarkStash is running, typing:
+
+```text
+;sig
+```
+
+can expand into the snippet content.
+
+## Template Placeholders
+
+Snippets can contain placeholders:
+
+```text
+Hello {name}, your meeting is on {date}.
+```
+
+Built-in dynamic variables:
+
+```text
+{date}
+{time}
+{datetime}
+{username}
+{clipboard}
+```
+
+Custom placeholders like `{name}` show a prompt before paste.
+
+## Themes And Palettes
+
+Open Settings and choose:
+
+```text
+THEME: dark / light
+COLOR PALETTE: named palette
+```
+
+Dark palettes:
+
+```text
+Mocha Terminal
+Emerald Console
+Royal Berry
+Nord Pine
+Plum Dusk
+Deep Harbor
+Indigo Neon
+Graphite Mint
+```
+
+Light palettes:
+
+```text
+Rose Milk
+Cotton Candy
+Lemon Sky
+Aqua Citrus
+Soft Linen
+Matcha Glass
+Peach Memo
+Sage Paper
+```
+
+Choose `Custom YAML` if you want to manually edit exact colors in `config.yaml`.
+
+The selected theme affects both:
+
+- Launcher
+- Creator popup
+
+## Backup
+
+Press:
+
+```text
+Ctrl+B
+```
+
+MarkStash creates a zip backup beside the app folder. The backup includes snippets and config.
+
+## Safe Delete
+
+Deleting a snippet does not permanently remove it. MarkStash moves it into:
+
+```text
+.trash
+```
+
+inside your snippet folder.
+
+## Build From Source
+
+From the project folder:
+
+```powershell
+python -m PyInstaller --clean --noconfirm --distpath dist_creator MarkStash.spec
+```
+
+Output:
+
+```text
+dist_creator\MarkStash.exe
+```
+
+The build is configured to:
+
+- Use the app `.ico`
+- Include `pngwing.com.ico` as the executable icon
+- Include the badge PNG
+- Disable UPX compression
+- Extract beside the EXE instead of relying only on `%TEMP%`
 
 ## Troubleshooting
 
-If MarkStash opens as a blank window:
+If config changes do not work:
 
-1. Make sure you are using the latest release exe.
-2. Make sure the exe is in a writable folder.
-3. Close MarkStash from Task Manager.
-4. Open `MarkStash.exe` again.
+1. Make sure you edited the `config.yaml` beside the EXE you launched.
+2. Exit MarkStash from the tray.
+3. Reopen the correct `MarkStash.exe`.
+4. Open Settings and Save once.
+
+If colors only affect the launcher:
+
+1. Use the latest rebuilt EXE.
+2. Exit any older tray process.
+3. Reopen MarkStash.
 
 If hotkeys do not work:
 
-1. Open `config.yaml` and check `hotkey_launcher` and `hotkey_creator`.
-2. Prefer `ctrl+shift+x` and `ctrl+shift+b`.
-3. Check `hotkey_debug.log` next to the exe.
-4. Close any existing MarkStash process from Task Manager.
-5. Open `MarkStash.exe` again.
+1. Avoid Windows reserved shortcuts.
+2. Use `ctrl+shift+x` for launcher.
+3. Use `ctrl+alt+v` or `ctrl+shift+b` for creator.
+4. Check `hotkey_debug.log`.
 
-If the app does not start:
+If the EXE shows a decompression error:
 
-1. Check whether `startup_crash.log` exists next to the exe.
-2. Move the exe to a normal writable folder such as `D:\Apps\MarkStash`.
-3. Do not run it from `C:\Program Files`.
-4. Restart Windows if an old background copy is stuck.
+1. Clear space on `C:\`.
+2. Clear `%TEMP%`.
+3. Keep MarkStash on `D:\Apps\MarkStash`.
+4. Use the latest EXE built without UPX.
 
-## Important Rules to Tell Users
+If MarkStash opens from the wrong folder:
 
-- Download `MarkStash.exe` from Releases.
-- Copy it to a writable folder such as `D:\Apps\MarkStash`.
-- Do not place it in `Program Files`.
-- Double-click the exe once before changing settings.
-- Let it create `config.yaml` and logs next to the exe.
-- Open Settings and choose the folder where snippets should be saved.
-- Use nested names like `folder/snippet-name` to create folders automatically.
-- Change `AltGr` hotkeys to `Ctrl + Shift` hotkeys.
-- If Run at Startup is enabled, launch the app once after moving the exe so the Startup entry points to the correct folder.
+1. Search for old `MarkStash.exe` copies.
+2. Delete or ignore old builds.
+3. Keep one main copy in:
+
+```text
+D:\Apps\MarkStash
+```
+
+## Suggested Final Release Files
+
+For a clean release, include:
+
+```text
+MarkStash.exe
+config.yaml
+README.md
+```
+
+The user can then create or choose their own snippet folder on `D:\`.
