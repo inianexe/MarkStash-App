@@ -1,6 +1,6 @@
 # MarkStash
 
-<p align="center">
+<p align="left">
   <img src="markstash_badge.png" width="96" alt="MarkStash icon">
 </p>
 
