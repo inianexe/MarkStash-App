@@ -4,7 +4,7 @@
   <img src="markstash_badge.png" width="48" alt="MarkStash icon">
 </p>
 
-**MarkStash - By inianexe** is a Windows Markdown snippet launcher. It lets you save useful text, commands, templates, notes, screenshots, and code snippets as `.md` files, then search and paste them anywhere with a hotkey.
+**MarkStash** is a Windows Markdown snippet launcher. It lets you save useful text, commands, templates, notes, screenshots, and code snippets as `.md` files, then search and paste them anywhere with a hotkey.
 
 ![MarkStash launcher screenshot](ss%20fol.png)
 
