@@ -21,7 +21,7 @@ D:\Apps\MarkStash
 Recommended snippet folder:
 
 ```text
-D:\Markdown Project Foler (DO NOT DELETE)
+C:\Users\<you>\Documents\MarkStash
 ```
 
 Your final setup should look like this:
@@ -32,7 +32,7 @@ D:\Apps\MarkStash\
   config.yaml
   hotkey_debug.log
 
-D:\Markdown Project Foler (DO NOT DELETE)\
+C:\Users\<you>\Documents\MarkStash\
   CPU GPU.md
   WiFi Networks.md
   work\
@@ -54,7 +54,7 @@ Those folders can block MarkStash from writing `config.yaml`, logs, backups, and
 
 ## Install
 
-1. Download `MarkStash.exe`.
+1. Download and extract [MarkStash.zip from the v1.0.0 release](https://github.com/inianexe/MarkStash-App/releases/tag/V1).
 2. Create this folder:
 
 ```text
@@ -68,7 +68,7 @@ D:\Apps\MarkStash
 7. Set your snippet folder to:
 
 ```text
-D:\Markdown Project Foler (DO NOT DELETE)
+C:\Users\<you>\Documents\MarkStash
 ```
 
 8. Save settings.
@@ -85,17 +85,10 @@ D:\Apps\MarkStash\MarkStash.exe
 D:\Apps\MarkStash\config.yaml
 ```
 
-In this development repo, the packaged build is here:
-
-```text
-D:\Projects\Markdown\dist_creator\MarkStash.exe
-D:\Projects\Markdown\dist_creator\config.yaml
-```
-
 Important config keys:
 
 ```yaml
-snippet_directory: D:\Markdown Project Foler (DO NOT DELETE)
+snippet_directory: C:\Users\<you>\Documents\MarkStash
 hotkey_launcher: ctrl+shift+x
 hotkey_creator: ctrl+alt+v
 theme_mode: dark
@@ -204,7 +197,7 @@ work/email/reply
 This creates:
 
 ```text
-D:\Markdown Project Foler (DO NOT DELETE)\work\email\reply.md
+C:\Users\<you>\Documents\MarkStash\work\email\reply.md
 ```
 
 ![MarkStash creator popup](ss%20creator.png)
@@ -348,27 +341,13 @@ Deleting a snippet does not permanently remove it. MarkStash moves it into:
 
 inside your snippet folder.
 
-## Build From Source
+## Source availability
 
-From the project folder:
+This repository currently distributes release downloads, screenshots, configuration and dependency information. Application source and `MarkStash.spec` are not included, so cloning this repository is not sufficient to run or rebuild MarkStash. Use the packaged release above.
 
-```powershell
-python -m PyInstaller --clean --noconfirm --distpath dist_creator MarkStash.spec
-```
+## Report a problem
 
-Output:
-
-```text
-dist_creator\MarkStash.exe
-```
-
-The build is configured to:
-
-- Use the app `.ico`
-- Include `pngwing.com.ico` as the executable icon
-- Include the badge PNG
-- Disable UPX compression
-- Extract beside the EXE instead of relying only on `%TEMP%`
+[Open an issue](https://github.com/inianexe/MarkStash-App/issues) with the release version, Windows version, steps to reproduce, expected behavior and actual behavior. Remove personal snippet contents from screenshots and logs.
 
 ## Troubleshooting
 
@@ -419,4 +398,5 @@ config.yaml
 README.md
 ```
 
-The user can then create or choose their own snippet folder on `D:\`.
+Choose any writable snippet folder; a D: drive is not required.
+
